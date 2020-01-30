@@ -1,4 +1,6 @@
-package undo;
+package change;
+
+import document.Document;
 
 /**
  * An interface that allows creation of a deletion or insertion {@link Change}

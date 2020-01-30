@@ -1,4 +1,4 @@
-package undo.impl;
+package undo;
 
 import static org.junit.Assert.*;
 

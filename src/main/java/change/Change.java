@@ -1,8 +1,11 @@
-package undo;
+package change;
+
+import document.Document;
+import undo.UndoManager;
 
 /**
  * An abstraction of a change that can be registered with an
- * {@link UndoManager} and applied to a {@link Document}. 
+ * {@link UndoManager} and applied to a {@link Document}.
  *
  * @author Bernd Rinn
  */

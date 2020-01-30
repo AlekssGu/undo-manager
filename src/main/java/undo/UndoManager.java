@@ -1,5 +1,8 @@
 package undo;
 
+import change.Change;
+import document.Document;
+
 /**
  * A manager for undo and redo operations to {@link Document}s, based
  * on {@link Change} objects.

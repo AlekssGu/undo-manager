@@ -1,4 +1,6 @@
-package undo;
+package document;
+
+import undo.UndoManager;
 
 /**
  * An abstraction of a document to be used with the {@link UndoManager}.

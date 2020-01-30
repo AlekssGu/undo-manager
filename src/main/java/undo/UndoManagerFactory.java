@@ -1,5 +1,8 @@
 package undo;
 
+import change.Change;
+import document.Document;
+
 /**
  * A factory for {@link UndoManager}s.
  *
