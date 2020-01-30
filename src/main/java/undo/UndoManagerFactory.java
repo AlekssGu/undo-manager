@@ -17,6 +17,6 @@ public interface UndoManagerFactory {
 	 * @param bufferSize The number of {@link Change}es stored.
 	 * @return The {@link UndoManager} created.
 	 */
-	public UndoManager createUndoManager(Document doc, int bufferSize);
+	UndoManager createUndoManager(Document doc, int bufferSize);
 	
 }

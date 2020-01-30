@@ -18,13 +18,13 @@ public interface UndoManager {
 	 * 
 	 * @param change The change to register.
 	 */
-	public void registerChange(Change change);
+	void registerChange(Change change);
 	
 	/**
 	 * Returns <code>true</code> if there is currently a change that 
 	 * can be undone, and <code>false</code> otherwise. 
 	 */
-	public boolean canUndo();
+	boolean canUndo();
 	
 	/**
 	 * Performs the undo operation of the current change. If the undo manager
@@ -36,13 +36,13 @@ public interface UndoManager {
 	 * 			would have returned <code>false</code>, or the application
 	 * 			of the change failed).
 	 */
-	public void undo();
+	void undo();
 	
 	/**
 	 * Returns <code>true</code> if there is currently a change that 
 	 * can be redone, and <code>false</code> otherwise. 
 	 */
-	public boolean canRedo();
+	boolean canRedo();
 	
 	/**
 	 * Performs the redo operation of the current change.
@@ -52,6 +52,6 @@ public interface UndoManager {
 	 *  		would have returned <code>false</code>, or the application
 	 *  		of the change failed).
 	 */
-	public void redo();
+	void redo();
 	
 }
