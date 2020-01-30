@@ -1,10 +1,10 @@
 package undo;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-public class UndoManagerFactoryImplTest {
+public class DefaultUndoManagerTest {
 
 	@Test
 	public void test() {
