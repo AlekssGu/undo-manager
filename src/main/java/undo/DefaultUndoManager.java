@@ -1,11 +1,17 @@
 package undo;
 
-import javax.inject.Singleton;
-
 import change.Change;
+import document.Document;
 
-@Singleton
 class DefaultUndoManager implements UndoManager {
+
+	private Document document;
+	private int bufferSize;
+
+	DefaultUndoManager(Document document, int bufferSize) {
+		this.document = document;
+		this.bufferSize = bufferSize;
+	}
 
 	@Override
 	public void registerChange(Change change) {
