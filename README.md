@@ -30,7 +30,7 @@ Tested solution with unit tests.
 3. Why use [Guice Dependency Injection framework](https://github.com/google/guice)?
     * Because it is lightweight and helps to separate logical modules and that way introduces loose coupling
     * Easy to switch implementations
-4. Why there is no comments in the code?
+4. Why there are no comments in the code?
     * I believe that code should be self explanatory without the need of comments explaining what certain thing does. I usually try to write code in the way that a person without IT knowledge could read it and understand the concept of what is happening. 
 
 ##### Possible improvements:
