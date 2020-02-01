@@ -21,16 +21,26 @@ public class UndoManagerParameterValidatorTest {
 
 	@Test(expected = DocumentIsMandatoryException.class)
 	public void throwsExceptionIfDocumentIsNull() {
-		validator.validate(DOCUMENT_EMPTY, BUFFER_SIZE_VALUE);
+		UndoManagerValidatorParameters parameters = validationParametersOf(DOCUMENT_EMPTY, BUFFER_SIZE_VALUE);
+		validator.validate(parameters);
 	}
 
 	@Test(expected = BufferSizeTooSmallException.class)
 	public void throwsExceptionIfBufferSizeIsTooSmall() {
-		validator.validate(mock(Document.class), BUFFER_SIZE_LOWER_THAN_ALLOWED);
+		UndoManagerValidatorParameters parameters = validationParametersOf(mock(Document.class), BUFFER_SIZE_LOWER_THAN_ALLOWED);
+		validator.validate(parameters);
 	}
 
 	@Test
 	public void successfullyPassesValidationIfParametersAreCorrect() {
-		validator.validate(mock(Document.class), BUFFER_SIZE_VALUE);
+		UndoManagerValidatorParameters parameters = validationParametersOf(mock(Document.class), BUFFER_SIZE_VALUE);
+		validator.validate(parameters);
+	}
+
+	private UndoManagerValidatorParameters validationParametersOf(Document document, int bufferSize) {
+		return ImmutableUndoManagerValidatorParameters.builder()
+				.document(document)
+				.bufferSize(bufferSize)
+				.build();
 	}
 }

@@ -9,9 +9,9 @@ class UndoManagerParameterValidator implements UndoManagerValidator {
 
 	private static final int BUFFER_SIZE_LOWER_LIMIT = 0;
 
-	public void validate(Document document, int bufferSize) {
-		validateDocument(document);
-		validateBufferSize(bufferSize);
+	public void validate(UndoManagerValidatorParameters parameters) {
+		validateDocument(parameters.getDocument());
+		validateBufferSize(parameters.getBufferSize());
 	}
 
 	private void validateDocument(Document document) {
