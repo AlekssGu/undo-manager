@@ -12,6 +12,9 @@ You are free to use third-party software libraries in your solution if you want.
 
 #### Solution description
 
+[![Build Status](https://travis-ci.org/AlekssGu/undo-manager.svg?branch=master)](https://travis-ci.org/AlekssGu/undo-manager)
+[![Unit test coverage](https://codecov.io/github/AlekssGu/undo-manager/coverage.svg?branch=master)](https://codecov.io/github/AlekssGu/undo-manager?branch=master)
+
 Implemented `UndoManager` and `UndoManagerFactory` interfaces.
 
 Created TextEditorModule which is the root module and in real application would consist of all submodules & configuration existing in the application.
