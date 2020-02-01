@@ -25,18 +25,29 @@ class DefaultUndoManager implements UndoManager {
 	}
 
 	@Override
+	public void undo() {
+		if (canUndo()) {
+			Change change = getLatestChangeToUndo();
+			undoChange(change);
+			putRevertedChangeToRedoRegister(change);
+		} else {
+			operationNotAllowed();
+		}
+	}
+
+	@Override
 	public boolean canUndo() {
 		return hasChangesToUndo();
 	}
 
 	@Override
-	public void undo() {
-		if (this.canUndo()) {
-			Change change = getLatestChangeToRevert();
-			revertChange(change);
-			putRevertedChangeToRedoRegister(change);
+	public void redo() {
+		if (canRedo()) {
+			Change change = getLatestChangeToRedo();
+			applyChange(change);
+			putAppliedChangeToCurrentChangeRegister(change);
 		} else {
-			throw new IllegalStateException();
+			operationNotAllowed();
 		}
 	}
 
@@ -45,20 +56,21 @@ class DefaultUndoManager implements UndoManager {
 		return hasChangesToRedo();
 	}
 
-	@Override
-	public void redo() {
-		if (this.canRedo()) {
-			Change change = getLatestChangeToRedo();
-			applyChange(change);
-			putAppliedChangeToCurrentChangeRegister(change);
-		} else {
-			throw new IllegalStateException();
+	private void operationNotAllowed() {
+		throw new IllegalStateException();
+	}
+
+	private void undoChange(Change changeToUndo) {
+		try {
+			changeToUndo.revert(this.document);
+		} catch (Exception exception) {
+			throw new IllegalStateException(exception);
 		}
 	}
 
-	private void revertChange(Change changeToUndo) {
+	private void applyChange(Change changeToRedo) {
 		try {
-			changeToUndo.revert(this.document);
+			changeToRedo.apply(this.document);
 		} catch (Exception exception) {
 			throw new IllegalStateException(exception);
 		}
@@ -80,19 +92,11 @@ class DefaultUndoManager implements UndoManager {
 		return !this.changesToRedo.isEmpty();
 	}
 
-	private Change getLatestChangeToRevert() {
+	private Change getLatestChangeToUndo() {
 		return this.currentChanges.poll();
 	}
 
 	private Change getLatestChangeToRedo() {
 		return this.changesToRedo.poll();
-	}
-
-	private void applyChange(Change changeToRedo) {
-		try {
-			changeToRedo.apply(this.document);
-		} catch (Exception exception) {
-			throw new IllegalStateException(exception);
-		}
 	}
 }

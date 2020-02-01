@@ -52,8 +52,8 @@ public class DefaultUndoManagerTest {
 		undoManager.undo();
 		undoManager.redo();
 
-		assertThat(undoManager.canRedo()).isFalse();
 		assertThat(undoManager.canUndo()).isTrue();
+		assertThat(undoManager.canRedo()).isFalse();
 	}
 
 	@Test(expected = IllegalStateException.class)
