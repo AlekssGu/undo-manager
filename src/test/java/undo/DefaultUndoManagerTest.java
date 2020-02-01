@@ -2,11 +2,13 @@ package undo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.willThrow;
+import static org.mockito.Mockito.mock;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import change.Change;
@@ -15,7 +17,7 @@ import document.Document;
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultUndoManagerTest {
 
-	private static final int BUFFER_SIZE_VALUE = 1;
+	private static final int BUFFER_SIZE_VALUE = 3;
 
 	@Mock
 	private Document document;
@@ -43,6 +45,41 @@ public class DefaultUndoManagerTest {
 		undoManager.undo();
 
 		assertThat(undoManager.canRedo()).isTrue();
+		assertThat(undoManager.canUndo()).isFalse();
+	}
+
+	@Test
+	public void revertsMultipleChanges() {
+		registerAndUndoMultipleChanges();
+
+		assertThat(undoManager.canRedo()).isTrue();
+		assertThat(undoManager.canUndo()).isFalse();
+	}
+
+	@Test
+	public void redoesMultipleChanges() {
+		registerAndUndoMultipleChanges();
+
+		undoManager.redo();
+		undoManager.redo();
+		undoManager.redo();
+
+		assertThat(undoManager.canRedo()).isFalse();
+		assertThat(undoManager.canUndo()).isTrue();
+	}
+
+	@Test
+	public void continuesToRegisterChangesAfterLimitIsReached() {
+		registerAndUndoMultipleChanges();
+		undoManager.registerChange(mock(Change.class));
+		undoManager.registerChange(mock(Change.class));
+
+		undoManager.redo();
+		undoManager.redo();
+		undoManager.redo();
+
+		assertThat(undoManager.canRedo()).isFalse();
+		assertThat(undoManager.canUndo()).isTrue();
 	}
 
 	@Test
@@ -76,6 +113,20 @@ public class DefaultUndoManagerTest {
 	@Test(expected = IllegalStateException.class)
 	public void throwsExceptionIfRedoInvokedOnEmptyRedoRegister() {
 		undoManager.redo();
+	}
+
+	private void registerAndUndoMultipleChanges() {
+		Change firstChange = Mockito.mock(Change.class);
+		Change secondChange = Mockito.mock(Change.class);
+		Change thirdChange = Mockito.mock(Change.class);
+
+		undoManager.registerChange(firstChange);
+		undoManager.registerChange(secondChange);
+		undoManager.registerChange(thirdChange);
+
+		undoManager.undo();
+		undoManager.undo();
+		undoManager.undo();
 	}
 
 }

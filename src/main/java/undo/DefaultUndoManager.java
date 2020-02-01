@@ -72,8 +72,12 @@ class DefaultUndoManager implements UndoManager {
 		try {
 			changeToRedo.apply(this.document);
 		} catch (Exception exception) {
-			throw new IllegalStateException(exception);
+			operationFailed(exception);
 		}
+	}
+
+	private void operationFailed(Exception exception) {
+		throw new IllegalStateException(exception);
 	}
 
 	private void putRevertedChangeToRedoRegister(Change change) {
